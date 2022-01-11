@@ -16,7 +16,7 @@ class OxfordWrapperServiceProvider extends ServiceProvider
     public function register()
     {
         // Config
-        $this->mergeConfigFrom(__DIR__ . '/config/oxford.php', 'oxford');
+        $this->mergeConfigFrom(__DIR__ . '/../config/oxford.php', 'oxford');
 
         $this->app->singleton(Client::class, function() {
             return new Client([
@@ -43,7 +43,7 @@ class OxfordWrapperServiceProvider extends ServiceProvider
     {
         $this->publishes(
             [
-                __DIR__ . '/config/oxford.php' => config_path('oxford.php'),
+                __DIR__ . '/../config/oxford.php' => config_path('oxford.php'),
             ],
             'oxford-config'
         );
