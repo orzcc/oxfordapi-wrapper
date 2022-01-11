@@ -1,5 +1,5 @@
 {
-    "name": "inani/oxfordapi-wrapper",
+    "name": "orzcc/oxfordapi-wrapper",
     "description": "A PHP/Laravel Wrapper for oxford dictionary API",
     "keywords": ["guzzle", "Oxford Dictionary", "laravel"],
     "license": "MIT",
