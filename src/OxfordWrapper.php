@@ -6,12 +6,14 @@ use Inani\OxfordApiWrapper\Components\DefinerTrait;
 use Inani\OxfordApiWrapper\Components\DictionaryTrait;
 use Inani\OxfordApiWrapper\Components\TalkerTrait;
 use Inani\OxfordApiWrapper\Components\TranslatorTrait;
+use Inani\OxfordApiWrapper\Components\GenderTrait;
 use GuzzleHttp\Client;
 
 class OxfordWrapper
 {
     use TranslatorTrait,
         DefinerTrait,
+        GenderTrait,
         DictionaryTrait,
         TalkerTrait;
 
@@ -19,13 +21,16 @@ class OxfordWrapper
 
     protected $word;
 
-    protected $base = 'api/v1';
+    protected $base = 'api/v2';
 
     protected $result;
 
-    public function __construct(Client $client)
+    protected $lang = 'en';
+
+    public function __construct(Client $client, $lang = 'en')
     {
         $this->client = $client;
+        $this->lang = $lang;
     }
 
     /**

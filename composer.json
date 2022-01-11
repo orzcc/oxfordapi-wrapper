@@ -1,21 +1,28 @@
 {
-    "name": "orzcc/oxfordapi-wrapper",
-    "description": "A PHP/Laravel Wrapper for oxford dictionary API",
-    "keywords": ["guzzle", "Oxford Dictionary", "laravel"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Inani El Houssain",
-            "email": "inanielhoussain@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "autoload": {
-      "psr-4": {
-        "Inani\\OxfordApiWrapper\\": "src/"
+  "name": "orzcc/oxfordapi-wrapper",
+  "description": "A PHP/Laravel Wrapper for oxford dictionary API",
+  "keywords": ["guzzle", "Oxford Dictionary", "laravel"],
+  "license": "MIT",
+  "authors": [
+      {
+          "name": "Inani El Houssain",
+          "email": "inanielhoussain@gmail.com"
       }
-    },
-    "require": {
-      "guzzlehttp/guzzle": "^7.0.1"
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Inani\\OxfordApiWrapper\\": "src/"
     }
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^7.0.1"
+  },
+  "extra": {
+      "laravel": {
+          "providers": [
+              "Inani\\OxfordApiWrapper\\OxfordWrapperServiceProvider"
+          ]
+      }
+  }
 }
