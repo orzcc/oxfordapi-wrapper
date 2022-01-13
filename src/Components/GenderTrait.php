@@ -18,7 +18,7 @@ trait GenderTrait
     {
         try{
             $this->result = $this->client->get(
-                "{$this->base}/words/{$this->lang}?q={$this->word}"
+                "{$this->base}/entries/{$this->lang}/{$this->word}?strictMatch=false"
             );
 
             if($this->result->getStatusCode() == 200){
