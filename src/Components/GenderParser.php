@@ -39,6 +39,7 @@ class GenderParser extends BasicResult
 
     protected function _getGender($result)
     {
+        $gender = '';
         if (property_exists($result, 'lexicalEntries')) {
             $lexicales = $result->lexicalEntries;
             foreach ($lexicales as $lexical) {
@@ -47,13 +48,14 @@ class GenderParser extends BasicResult
                         if (property_exists($entry, 'grammaticalFeatures')) {
                             foreach ($entry->grammaticalFeatures as $feature) {
                                 if (isset($feature->type) && $feature->type == 'Gender' && isset($feature->id)) {
+                                    $gender = $feature->id;
                                     if (config('oxford.lang') == 'es' && $feature->id == 'masculine') {
                                         // es: exists multi genders, get masculine.
-                                        return $feature->id;
+                                        return $gender;
                                     }
                                     if (config('oxford.lang') == 'fr' && !empty($feature->id)) {
                                         // fr: exists multi genders, get first
-                                        return $feature->id;
+                                        return $gender;
                                     }
                                 }
                             }
@@ -63,7 +65,7 @@ class GenderParser extends BasicResult
             }
         }
 
-        return '';
+        return $gender;
     }
 
     public function getResult()
