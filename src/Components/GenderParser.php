@@ -30,7 +30,12 @@ class GenderParser extends BasicResult
                             foreach($entry->grammaticalFeatures as $feature){
                                 if (isset($feature->type) && $feature->type == 'Gender' && isset($feature->id)) {
                                     $data['gender'] = $feature->id;
-                                    if ($data['gender'] == 'masculine') { // exists multi genders, get masculine.
+                                    if ($this->lang == 'es' && $data['gender'] == 'masculine') {
+                                        // es: exists multi genders, get masculine.
+                                        break;
+                                    }
+                                    if ($this->lang == 'fr' && ! empty($data['gender'])) {
+                                        // fr: exists multi genders, get first
                                         break;
                                     }
                                 }
