@@ -21,29 +21,9 @@ class GenderParser extends BasicResult
         $result = $this->result[0];
         $data = [];
 
-        if (property_exists($result, 'lexicalEntries')) {
-            $lexicales = $result->lexicalEntries;
-            foreach($lexicales as $lexical) {
-                if(property_exists($lexical, 'entries')){
-                    foreach($lexical->entries as $entry){
-                        if(property_exists($entry, 'grammaticalFeatures')){
-                            foreach($entry->grammaticalFeatures as $feature){
-                                if (isset($feature->type) && $feature->type == 'Gender' && isset($feature->id)) {
-                                    $data['gender'] = $feature->id;
-                                    if ($this->lang == 'es' && $data['gender'] == 'masculine') {
-                                        // es: exists multi genders, get masculine.
-                                        break;
-                                    }
-                                    if ($this->lang == 'fr' && ! empty($data['gender'])) {
-                                        // fr: exists multi genders, get first
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        $gender = $this->_getGender($result);
+        if (! empty($gender)) {
+            $data['gender'] = $gender;
         }
 
         if (property_exists($result, 'type')) {
@@ -55,6 +35,35 @@ class GenderParser extends BasicResult
         }
 
         return $data;
+    }
+
+    protected function _getGender($result)
+    {
+        if (property_exists($result, 'lexicalEntries')) {
+            $lexicales = $result->lexicalEntries;
+            foreach ($lexicales as $lexical) {
+                if (property_exists($lexical, 'entries')) {
+                    foreach ($lexical->entries as $entry) {
+                        if (property_exists($entry, 'grammaticalFeatures')) {
+                            foreach ($entry->grammaticalFeatures as $feature) {
+                                if (isset($feature->type) && $feature->type == 'Gender' && isset($feature->id)) {
+                                    if (config('oxford.lang') == 'es' && $feature->id == 'masculine') {
+                                        // es: exists multi genders, get masculine.
+                                        return $feature->id;
+                                    }
+                                    if (config('oxford.lang') == 'fr' && !empty($feature->id)) {
+                                        // fr: exists multi genders, get first
+                                        return $feature->id;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return '';
     }
 
     public function getResult()
